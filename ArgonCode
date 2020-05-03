@@ -1,0 +1,31 @@
+int led2 = D7; 
+
+int lightsensor = A0;
+int lightLevel;
+
+void setup() {
+
+  pinMode(led2, OUTPUT);
+  pinMode(lightsensor, INPUT);
+
+}
+
+void loop() {
+    
+    lightLevel = analogRead(lightsensor);
+    String light = String(lightLevel);
+    
+    if (lightLevel < 15){
+        
+        digitalWrite(led2, LOW); //This is there just so that the LED behaves in accordance with the light level so that the message is conveyed at a glance without having a notification.
+        Particle.publish("light", "Dim", PRIVATE);
+    } 
+    else{
+        
+        digitalWrite(led2, HIGH); //This is there just so that the LED behaves in accordance with the light level so that the message is conveyed at a glance without having a notification.
+        Particle.publish("light", "Bright", PRIVATE);
+    }
+    
+    delay(5000);
+
+}
